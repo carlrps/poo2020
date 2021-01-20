@@ -1,5 +1,6 @@
 package cofre;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 enum Moeda {
@@ -28,6 +29,10 @@ class Item {
     Item (String descricao, int volume) {
         this.descricao = descricao;
         this.volume = volume;
+    }
+
+    public String toString() {
+        return descricao;
     }
 }
 
@@ -68,8 +73,8 @@ public class Cofre {
 
     void addItem(Item item){
     if(estaQuebrado == false){
-        itens.add(new Item(descricao)); 
-        this.volume += volume; 
+        itens.add(item);
+        this.volume += volume;
     }
     else {
         System.out.println("vixe, tá quebrado");
@@ -104,14 +109,14 @@ public class Cofre {
 }
 
     public String toString() {
-        return "Itens: " + itens + " Valor: " + valor + " Volume: " + volume + "/" + this.volumeMax + " Quebrado?: " + estaQuebrado;
+        return "Itens: " + itens.toString() + " Valor: " + valor + " Volume: " + volume + "/" + this.volumeMax + " Quebrado?: " + estaQuebrado;
     }
 
     public static void main(String[] args) {
         Cofre porco = new Cofre(20);
         System.out.println(porco); //I:() M:0 V:0/20 EQ:false
         porco.addMoeda(Moeda.M10);
-        porco.addMoeda(Moeda.M50);
+        porco.addMoeda(Moeda.M10);
         System.out.println(porco); //I:() M:0.6 V:4/20 EQ:false
 
         porco.addItem(new Item("ouro", 3));
