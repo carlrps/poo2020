@@ -1,5 +1,7 @@
 package cofre;
 
+import java.util.Scanner;
+
 enum Moeda {
     M10(0.10, 1),
     M25(0.25, 2),
@@ -30,7 +32,7 @@ class Item {
 }
 
 public class Cofre {
-    String itens;
+    ArrayList<Item> itens = new ArrayList<Item>();
     double valor;
     int volume;
     int volumeMax;
@@ -66,7 +68,7 @@ public class Cofre {
 
     void addItem(Item item){
     if(estaQuebrado == false){
-        this.descrição = descricao;
+        itens.add(new Item(descricao)); 
         this.volume += volume; 
     }
     else {
