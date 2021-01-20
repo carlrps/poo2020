@@ -49,21 +49,41 @@ public class Cofre {
 
     void addMoeda(Moeda moeda){
     if(estaQuebrado == false){
-        if(moeda == Moeda.M10){
+        if(moeda.volume + this.volume < this.volumeMax){
+            if(moeda == Moeda.M10){
             this.valor += 0.10;
             this.volume += 1;
         }
-        if(moeda == Moeda.M25) {
-            this.valor += 0.25;
-            this.volume += 2;
+    }
+        else {
+            System.out.println("cofre superlotado");
         }
+
+        if(moeda.volume + this.volume < this.volumeMax){
+            if(moeda == Moeda.M25) {
+            this.valor += 0.25;
+            this.volume += 2;}
+        }
+        else {
+            System.out.println("cofre superlotado");
+        }
+
+        if(moeda.volume + this.volume < this.volumeMax){
         if(moeda == Moeda.M50) {
             this.valor += 0.50;
-            this.volume += 3; 
+            this.volume += 3; }
         }
+        else {
+            System.out.println("cofre superlotado");
+        }
+
+        if(moeda.volume + this.volume < this.volumeMax){
         if(moeda == Moeda.M100) {
             this.valor += 0.100;
-            this.volume += 4;
+            this.volume += 4;}
+        }
+        else {
+            System.out.println("cofre superlotado");
         }
     }
     else {
@@ -73,8 +93,13 @@ public class Cofre {
 
     void addItem(Item item){
     if(estaQuebrado == false){
+        if(item.volume + this.volume < this.volumeMax){
         itens.add(item);
-        this.volume += volume;
+        this.volume += item.volume;
+        }
+        else {
+            System.out.println("cofre superlotado");
+        }
     }
     else {
         System.out.println("vixe, tá quebrado");
@@ -92,7 +117,8 @@ public class Cofre {
 
     void pegarMoedas(){
     if(estaQuebrado == true){
-        this.valor = null;
+        System.out.println(this.valor);
+        this.valor = 0.0;
     }
     else {
         System.out.println("puts, quebra antes kk");
@@ -101,8 +127,9 @@ public class Cofre {
 
     void pegarItens(){
     if(estaQuebrado == true){
-        this.itens = null;
-        }
+        System.out.println(itens.toString());
+        itens.clear();
+    }
     else {
         System.out.println("puts, quebra antes kk");
     }
@@ -116,7 +143,7 @@ public class Cofre {
         Cofre porco = new Cofre(20);
         System.out.println(porco); //I:() M:0 V:0/20 EQ:false
         porco.addMoeda(Moeda.M10);
-        porco.addMoeda(Moeda.M10);
+        porco.addMoeda(Moeda.M50);
         System.out.println(porco); //I:() M:0.6 V:4/20 EQ:false
 
         porco.addItem(new Item("ouro", 3));
@@ -125,6 +152,17 @@ public class Cofre {
         porco.addItem(new Item("passaporte", 2));
         System.out.println(porco); //I:(ouro, passaporte) M:0.6 V:9/20 EQ:false
 
+        porco.pegarItens();  //Voce deve quebrar o cofre primeiro
+        porco.pegarMoedas(); //Voce deve quebrar o cofre primeiro
+        System.out.println(porco); //I:(ouro, passaporte) M:0.6 V:9/20 EQ:false
+
+        porco.quebrar();
+        porco.quebrar(); //O cofre ja esta quebrado
+
+        System.out.println(porco.pegarItens());  //ouro, passaporte
+        System.out.println(porco.pegarMoedas()); //0.6
+        System.out.println(porco); //I:() M:0.0 V:9/20 EQ:true
     }
+
 
 }
